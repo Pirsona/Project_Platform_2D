@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoneyController : MonoBehaviour
 {
     [SerializeField] private int _startCountMoney;  
-    [SerializeField] private GameObject _moneyPrefab;
+    [SerializeField] private Money _moneyPrefabs;
     [SerializeField] private List<MoneySpawner> _spawners;
 
     private void Start()
@@ -19,7 +19,7 @@ public class MoneyController : MonoBehaviour
 
         foreach (var spawner in selectedSpawners)
         {
-            Instantiate(_moneyPrefab, spawner.transform.position, spawner.transform.rotation);
+            spawner.CreateMoney(_moneyPrefabs);
         }
     }
 

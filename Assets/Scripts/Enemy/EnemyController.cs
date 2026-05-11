@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
 
     private void MoveToPoint()
     {
-        if (Vector3.Distance(transform.position, _points[_currentIndex].transform.position) < _waypointThreshold)
+        if (Vector3Extensions.IsEnoughClose(transform.position, _points[_currentIndex].transform.position, _waypointThreshold))
         {
           _currentIndex = (_currentIndex + 1) % _points.Count;
         }

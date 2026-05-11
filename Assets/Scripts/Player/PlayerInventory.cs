@@ -11,4 +11,13 @@ public class PlayerInventory : MonoBehaviour
     {
         _moneyCount += count;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Money money))
+        {
+            AddMoney(money.Cost);
+            Destroy(money.gameObject);
+        }
+    }
 }
