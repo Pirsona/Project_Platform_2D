@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class Patroller : MonoBehaviour
 {
     [SerializeField] private List<Point> _points;
     [SerializeField] private float _speed;

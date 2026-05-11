@@ -7,11 +7,6 @@ public class PlayerInventory : MonoBehaviour
     private int _moneyCount = 0;
     public int Money => _moneyCount;
 
-    public void AddMoney(int count)
-    {
-        _moneyCount += count;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Money money))
@@ -19,5 +14,10 @@ public class PlayerInventory : MonoBehaviour
             AddMoney(money.Cost);
             Destroy(money.gameObject);
         }
+    }
+
+    public void AddMoney(int count)
+    {
+        _moneyCount += count;
     }
 }

@@ -1,31 +1,24 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerAnimation : MonoBehaviour
 {
+    private const string IsJumping = nameof(IsJumping);
+
     private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
     }
 
-    public void UpdateVisuals(float horizontalInput, bool isGrounded)
+    public void SetSpeed(float horizontalInput)
     {
-        _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
-        _animator.SetBool("IsJumping", !isGrounded);
+        _animator.SetFloat(PlayerAnimatorData.Params.Speed, Mathf.Abs(horizontalInput));
+    }
 
-        if (horizontalInput > 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
-        else if (horizontalInput < 0)
-        {
-            _spriteRenderer.flipX = true;
-        }
+    public void SetJump(bool IsGrounded)
+    {
+        _animator.SetBool(PlayerAnimatorData.Params.IsJumping, !IsGrounded);
     }
 }

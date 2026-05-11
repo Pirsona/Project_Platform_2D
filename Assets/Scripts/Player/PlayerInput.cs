@@ -12,10 +12,10 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        Controller();
+        ReadInput();
     }
 
-    private void Controller()
+    private void ReadInput()
     {
         _horizontalInput = Input.GetAxis(Horizontal);
 
