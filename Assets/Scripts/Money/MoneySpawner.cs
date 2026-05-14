@@ -1,12 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoneySpawner : MonoBehaviour
 {
     [SerializeField] private int _startCountMoney;  
     [SerializeField] private Money _moneyPrefabs;
-    [SerializeField] private List<MoneyFactory> _spawners;
+    [SerializeField] private Transform[] _spawnersPositions;
+
+    private void OnEnable()
+    {
+        _moneyPrefabs.OnCollected += DestroyMoney;
+    }
+
+    private void OnDisable()
+    {
+        _moneyPrefabs.OnCollected -= DestroyMoney;
+    }
+
 
     private void Start()
     {
@@ -15,27 +24,34 @@ public class MoneySpawner : MonoBehaviour
 
     private void CreateMoney()
     {
-        List<MoneyFactory> selectedSpawners = SelectSpawners();
+        Transform[] selectedSpawners = ShuffleArray();
 
-        foreach (var spawner in selectedSpawners)
+        for(int i = 0; i < _startCountMoney; i++)
         {
-            spawner.CreateMoney(_moneyPrefabs);
+           Money money =  Instantiate(_moneyPrefabs, selectedSpawners[i].position, selectedSpawners[i].rotation);
+            money.OnCollected += DestroyMoney;
         }
     }
 
-    private List<MoneyFactory> SelectSpawners()
+
+    private void DestroyMoney(Money money)
     {
-        List<MoneyFactory> selected = new List<MoneyFactory>();
+        money.OnCollected -= DestroyMoney;
+        Destroy(money.gameObject);
+    }
 
-        List<MoneyFactory> tempSelected = new List<MoneyFactory>(_spawners);
+    private Transform[] ShuffleArray()
+    {
+        Transform[] selected = _spawnersPositions;
+        System.Random random = new System.Random();  
 
-        for(int i = 0; i < Mathf.Min(_startCountMoney, _spawners.Count); i++)
+        for (int i = selected.Length - 1; i >= 1; i--)
         {
-            int indexSpawn = Random.Range(0, tempSelected.Count);
-
-            selected.Add(tempSelected[indexSpawn]);
-            tempSelected.RemoveAt(indexSpawn);
-        }    
+            int j = random.Next(i + 1);
+            var temp = selected[j];
+            selected[j] = selected[i];
+            selected[i] = temp;
+        }
 
         return selected;
     }

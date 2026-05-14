@@ -3,16 +3,21 @@ using UnityEngine;
 public class GroundDetector : MonoBehaviour
 {
     [SerializeField] private GameObject _leg;
+    [SerializeField] private LayerMask _layer;
     [SerializeField] private float _slopeRayLength;
 
-    public bool IsGrounded => CheckIsGround();
+    public bool IsGrounded {get; private set;}
 
-    private bool CheckIsGround()
+    private void FixedUpdate()
+    {
+       CheckIsGround();
+    }
+    private void CheckIsGround()
     {
         float rayDistance = _slopeRayLength;
 
-        RaycastHit2D hit = Physics2D.Raycast(_leg.transform.position, Vector2.down, rayDistance);
+        Collider2D hit = Physics2D.OverlapCircle(_leg.transform.position, _slopeRayLength, _layer);
 
-        return hit.collider != null;
+        IsGrounded = hit != null;
     }
 }

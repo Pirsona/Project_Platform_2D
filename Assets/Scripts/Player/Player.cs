@@ -8,21 +8,21 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerAnimation _animation;
     [SerializeField] private GroundDetector _detector;
 
-    public float HorizontalInput => _input.HorizontalInput;
-    public bool IsJumping => _input.IsJumping;
-    public bool IsGrounded => _detector.IsGrounded;
-
     private void Update()
     {
-        _mover.Move(HorizontalInput);
+        _animation.SetSpeed(_input.HorizontalInput);
+        _animation.SetJump(_detector.IsGrounded);
+        _rotate.Rotate(_input.HorizontalInput);
+    }
 
-        if (IsJumping && IsGrounded)
+    private void FixedUpdate()
+    {
+        _mover.Move(_input.HorizontalInput);
+
+        if (_input.IsJumping && _detector.IsGrounded)
         {
             _mover.Jump();
+            _input.ConsumeJump();
         }
-
-        _rotate.Rotate(HorizontalInput);
-        _animation.SetSpeed(HorizontalInput);
-        _animation.SetJump(IsGrounded);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     private const string Horizontal = "Horizontal";
+    private KeyCode _jumpButton = KeyCode.Space;
     private float _horizontalInput;
     private bool _isJumping;
 
@@ -18,14 +19,15 @@ public class PlayerInput : MonoBehaviour
     private void ReadInput()
     {
         _horizontalInput = Input.GetAxis(Horizontal);
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(_jumpButton))
         {
             _isJumping = true;
         }
-        else
-        {
-            _isJumping = false;
-        }
+
+    }
+
+    public void ConsumeJump()
+    {
+        _isJumping = false;
     }
 }

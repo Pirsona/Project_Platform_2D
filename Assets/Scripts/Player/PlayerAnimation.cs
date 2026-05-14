@@ -3,9 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimation : MonoBehaviour
 {
-    private const string IsJumping = nameof(IsJumping);
-
     private Animator _animator;
+    private bool _isJumping = false;    
 
     private void Start()
     {
@@ -19,6 +18,10 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetJump(bool IsGrounded)
     {
-        _animator.SetBool(PlayerAnimatorData.Params.IsJumping, !IsGrounded);
+        if(_isJumping != IsGrounded)
+        {
+            _animator.SetBool(PlayerAnimatorData.Params.IsJumping, !IsGrounded);
+            _isJumping = IsGrounded;
+        }
     }
 }
