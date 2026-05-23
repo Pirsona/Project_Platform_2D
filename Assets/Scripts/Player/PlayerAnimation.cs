@@ -4,7 +4,8 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     private Animator _animator;
-    private bool _isJumping = false;    
+    private bool _isJumping = false;
+    private bool _isCharging = false;
 
     private void Start()
     {
@@ -22,6 +23,15 @@ public class PlayerAnimation : MonoBehaviour
         {
             _animator.SetBool(PlayerAnimatorData.Params.IsJumping, !IsGrounded);
             _isJumping = IsGrounded;
+        }
+    }
+
+    public void SetAttack(bool IsAttack)
+    {
+        if(_isCharging != IsAttack)
+        {
+            _animator.SetBool(PlayerAnimatorData.Params.IsAttacking, IsAttack);
+            _isCharging = IsAttack;
         }
     }
 }

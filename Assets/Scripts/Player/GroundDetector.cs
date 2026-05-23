@@ -14,8 +14,6 @@ public class GroundDetector : MonoBehaviour
     }
     private void CheckIsGround()
     {
-        float rayDistance = _slopeRayLength;
-
         Collider2D hit = Physics2D.OverlapCircle(_leg.transform.position, _slopeRayLength, _layer);
 
         IsGrounded = hit != null;

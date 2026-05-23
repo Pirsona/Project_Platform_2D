@@ -6,16 +6,6 @@ public class MoneySpawner : MonoBehaviour
     [SerializeField] private Money _moneyPrefabs;
     [SerializeField] private Transform[] _spawnersPositions;
 
-    private void OnEnable()
-    {
-        _moneyPrefabs.OnCollected += DestroyMoney;
-    }
-
-    private void OnDisable()
-    {
-        _moneyPrefabs.OnCollected -= DestroyMoney;
-    }
-
 
     private void Start()
     {

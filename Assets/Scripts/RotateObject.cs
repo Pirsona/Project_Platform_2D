@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerRotate : MonoBehaviour
+public class RotateObject : MonoBehaviour
 {
     private bool _isLookRight = true;
     private Quaternion _rightRotation;
