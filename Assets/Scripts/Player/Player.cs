@@ -4,7 +4,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerInput _input;
     [SerializeField] private PlayerMover _mover;
-    [SerializeField] private RotateObject _rotate;
+    [SerializeField] private ObjectRotator _rotate;
     [SerializeField] private PlayerAnimation _animation;
     [SerializeField] private PlayerAttack _attack;
     [SerializeField] private GroundDetector _detector;

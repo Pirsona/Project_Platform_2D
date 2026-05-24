@@ -15,11 +15,11 @@ public class PlayerAttack : MonoBehaviour
 
     private float _nextAttackTime;
     private bool _isAttack;
-    private WaitForSeconds wait;
+    private WaitForSeconds _wait;
 
     private void Start()
     {
-        wait = new WaitForSeconds(_attackDuration);
+        _wait = new WaitForSeconds(_attackDuration);
     }
 
 
@@ -41,13 +41,13 @@ public class PlayerAttack : MonoBehaviour
         {
             if (hit.TryGetComponent(out Health health))
             {
-                health.DecreaseHealth(_damage);
+                health.TakeDamage(_damage);
             }
         }
 
         _nextAttackTime = Time.time + _cooldown;
 
-        yield return wait;
+        yield return _wait;
 
         _isAttack = false;
     }

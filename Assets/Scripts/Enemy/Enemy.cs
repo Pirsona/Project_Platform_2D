@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private Patroller _patroller;
     [SerializeField] private EnemySearch _search;
-    [SerializeField] private RotateObject _rotate;
+    [SerializeField] private ObjectRotator _rotate;
     [SerializeField] private EnemyAttack _attack;
     [SerializeField] private EnemyAnimator _animator;
 

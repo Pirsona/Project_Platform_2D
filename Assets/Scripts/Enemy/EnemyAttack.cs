@@ -20,7 +20,7 @@ public class EnemyAttack : MonoBehaviour
 
             if (objectAttack.TryGetComponent(out Health heal))
             {
-                heal.DecreaseHealth(_damage);
+                heal.TakeDamage(_damage);
             }
 
             _nextAttackTime = Time.time + _cooldown;

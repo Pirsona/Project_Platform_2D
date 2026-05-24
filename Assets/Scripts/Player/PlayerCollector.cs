@@ -24,9 +24,9 @@ public class PlayerCollector : MonoBehaviour
 
         if(collision.gameObject.TryGetComponent(out Heal heal))
         {
-            if (_health.CurrentHealth < _health.MaxHealth)
+            if (_health.Current < _health.Max)
             {
-                _health.AddHealth(heal.Replenish);
+                _health.Heal(heal.Replenish);
                 heal.Collect();
             }
         }
