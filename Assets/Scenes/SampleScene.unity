@@ -2491,14 +2491,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyBlob
       objectReference: {fileID: 0}
-    - target: {fileID: 2044585177398451564, guid: 2bd8a9114695f4f4bacb35907abd8323, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2044585177398451564, guid: 2bd8a9114695f4f4bacb35907abd8323, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5334523500542794632, guid: 2bd8a9114695f4f4bacb35907abd8323, type: 3}
       propertyPath: m_Camera
       value: 
@@ -2615,18 +2607,6 @@ PrefabInstance:
     - target: {fileID: 3759945521175643441, guid: e246373895458c0478830c43423e96b1, type: 3}
       propertyPath: m_Name
       value: BackGround
-      objectReference: {fileID: 0}
-    - target: {fileID: 9101299400256751547, guid: e246373895458c0478830c43423e96b1, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.906806
-      objectReference: {fileID: 0}
-    - target: {fileID: 9101299400256751547, guid: e246373895458c0478830c43423e96b1, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.1089303
-      objectReference: {fileID: 0}
-    - target: {fileID: 9101299400256751547, guid: e246373895458c0478830c43423e96b1, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.4197717
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2776,14 +2756,14 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 2016091765}
   - {fileID: 2332551482677503065}
   - {fileID: 4874545166782735133}
   - {fileID: 1618500101}
   - {fileID: 350202969}
   - {fileID: 208763238}
   - {fileID: 491663545}
+  - {fileID: 2124799628}
   - {fileID: 2007442056}
   - {fileID: 1335861633}
   - {fileID: 232355224}
-  - {fileID: 2016091765}
-  - {fileID: 2124799628}
