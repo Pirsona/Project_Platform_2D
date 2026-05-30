@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInventory))]
-[RequireComponent (typeof(Health))]
 public class PlayerCollector : MonoBehaviour
 {
-    private PlayerInventory _inventory;
-    private Health _health;
+    [SerializeField] private Health _health;
+    [SerializeField] private PlayerInventory _inventory;
 
-    private void Start()
-    {
-        _inventory = GetComponent<PlayerInventory>();
-        _health = GetComponent<Health>();
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Money money))
@@ -26,7 +17,7 @@ public class PlayerCollector : MonoBehaviour
         {
             if (_health.Current < _health.Max)
             {
-                _health.Heal(heal.Replenish);
+                _health.TakeHeal(heal.Replenish);
                 heal.Collect();
             }
         }

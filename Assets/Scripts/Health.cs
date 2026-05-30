@@ -5,28 +5,35 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float _max;
 
-    public float Current {get; private set;}
+    private float _min = 0;
+
+    public event Action Died;
+    public event Action ValueChanged;
+
+    public float Current { get; private set; }
     public float Max => _max;
 
-    public event Action OnDied;
-
-    private void Start()
+    private void Awake()
     {
-        Current = _max;   
+        Current = _max;
     }
 
-    public void Heal(float count)
+    public void TakeHeal(float count)
     {
         Current = Mathf.Min(Current + count, _max);
+
+        ValueChanged?.Invoke();
     }
 
     public void TakeDamage(float count)
     {
-        Current -= count;
+        Current = Mathf.Max(Current - count, _min);
 
-        if (Current <= 0)
+        if (Current <= _min)
         {
-            OnDied?.Invoke();
+            Died?.Invoke();
         }
+
+        ValueChanged?.Invoke();
     }
-} 
+}

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4562758190153215224}
   - component: {fileID: 8105967293608771106}
   - component: {fileID: 1596101299087405479}
-  - component: {fileID: 8483908204543882608}
+  - component: {fileID: 5343052704885763704}
   m_Layer: 7
   m_Name: EnemyBlob
   m_TagString: Untagged
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efed49fe8e9f5f645ab29390f5620353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8483908204543882608
+--- !u!114 &5343052704885763704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1573394110619423207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79e27b357565f6b48a92e3dee8c41d38, type: 3}
+  m_Script: {fileID: 11500000, guid: fe2c6a114518cdd43a7be7636d67048d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _max: 60

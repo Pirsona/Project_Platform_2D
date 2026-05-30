@@ -11,12 +11,12 @@ public class PlayerDeath : MonoBehaviour
     {
         _health = GetComponent<Health>();
 
-        _health.OnDied += PlayDeath;
+        _health.Died += PlayDeath;
     }
 
     private void OnDisable()
     {
-        _health.OnDied -= PlayDeath;
+        _health.Died -= PlayDeath;
     }
 
     private void PlayDeath()
