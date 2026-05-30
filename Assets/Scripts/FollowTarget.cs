@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowTarget : MonoBehaviour
 {
     [SerializeField] private Transform _target;
-    [SerializeField] private Vector2 _offset;
+    [SerializeField] private Vector3 _offset;
 
     private void LateUpdate()
     {
@@ -16,7 +16,7 @@ public class FollowTarget : MonoBehaviour
     {
         if (_target != null)
         {
-            transform.position = _target.position + (Vector3)_offset;
+            transform.position = _target.position + _offset;
         }    
     }
 }
