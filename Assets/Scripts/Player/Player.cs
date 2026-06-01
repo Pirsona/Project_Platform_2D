@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ObjectRotator _rotate;
     [SerializeField] private PlayerAnimation _animation;
     [SerializeField] private PlayerAttack _attack;
+    [SerializeField] private AbilityCast _abilityCast;
     [SerializeField] private GroundDetector _detector;
 
     private void Update()
@@ -30,6 +31,11 @@ public class Player : MonoBehaviour
         {
             _attack.Attack();
             _input.ConsumeAttack();
+        }
+        if (_input.IsAbilityApplying)
+        {
+            _abilityCast.Launch();
+            _input.ConsumeAbility();
         }
     }
 }
