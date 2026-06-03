@@ -13,20 +13,18 @@ public class AbilityBar : MonoBehaviour
         _slider = GetComponent<Slider>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        UpdateView();
+        _ability.ProgressChanged += UpdateView;
     }
 
-    private void UpdateView()
+    private void OnDisable()
     {
-        if(_ability.IsAbilityActive)
-        {
-            _slider.value = _ability.CastProgress;
-        }
-        else 
-        {
-            _slider.value = _ability.CooldownProgress;
-        }
+        _ability.ProgressChanged -= UpdateView;
+    }
+
+    private void UpdateView(float value)
+    {
+        _slider.value = value;
     }
 }

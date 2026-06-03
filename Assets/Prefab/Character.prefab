@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 3614707124949780898}
   - component: {fileID: 6997255627814924903}
   - component: {fileID: 3564273190102654189}
+  - component: {fileID: 1489963362745223164}
   m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
@@ -728,7 +729,6 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 128
-  _vampireAura: {fileID: 3950804530535876727}
   _damagePerSecond: 10
   _duration: 6
 --- !u!114 &3564273190102654189
@@ -744,6 +744,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _max: 100
+--- !u!114 &1489963362745223164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009550334234226238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9965ae489bb72c4d99c5bc49d80655b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ability: {fileID: 6997255627814924903}
+  _aura: {fileID: 3950804530535876727}
 --- !u!1 &8520801585972998915
 GameObject:
   m_ObjectHideFlags: 0

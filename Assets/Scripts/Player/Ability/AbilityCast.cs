@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,68 +8,116 @@ public class AbilityCast : MonoBehaviour
     [SerializeField] private float _cooldown;
     [SerializeField] private float _radius;
     [SerializeField] private LayerMask _layer;
-    [SerializeField] private GameObject _vampireAura;
     [SerializeField] private float _damagePerSecond;
     [SerializeField] private float _duration;
+
+    private const int StandartArrayCount = 10;
 
     private bool _isAbilityActive = false;
     private float _elapsed;
     private float _nextAbilityTime;
     private Health _playerHealth;
+    private Collider2D[] _hits = new Collider2D[StandartArrayCount];
+    private Coroutine _coroutineLaunch;
+    private Coroutine _coroutineCooldown;
 
-    public bool IsAbilityActive => _isAbilityActive;
+    public event Action<float> ProgressChanged;
+    public event Action<bool> OnStateChanged;
+
     public float CastProgress =>  1f - (_elapsed / _duration);
     public float CooldownProgress => Mathf.Clamp01(1f - ((_nextAbilityTime - Time.time) / _cooldown));
+    public float Radius => _radius;
 
     private void Start()
     {
         _playerHealth = GetComponent<Health>();
-
-        float diameter = _radius * 2f;
-        _vampireAura.transform.localScale = new Vector3(diameter, diameter, 1f);
-        _vampireAura.SetActive(false);
     }
 
     public void Launch()
     {
         if(Time.time >= _nextAbilityTime && _isAbilityActive == false)
         {
-            StartCoroutine(VampiricActivate());
+           _coroutineLaunch = StartCoroutine(ActivateVampiric());
         }
     }
 
-    IEnumerator VampiricActivate()
+    private IEnumerator ActivateVampiric()
     {
         _elapsed = 0;
 
         _isAbilityActive = true;
-        _vampireAura.SetActive(true);
+        OnStateChanged?.Invoke(_isAbilityActive);
 
         while (_elapsed < _duration)
         {
-            VampiricDamage();
+            ProcessVampirism();
 
             _elapsed += Time.deltaTime;
-
+            ProgressChanged?.Invoke(CastProgress);
             yield return null;
         }
 
-        _vampireAura.SetActive(false);
-        _nextAbilityTime = Time.time + _cooldown;
-        _isAbilityActive = false;
+        StopCasting();
     }
 
-
-    private void VampiricDamage()
+    private void StopCasting()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius, _layer);
+        _nextAbilityTime = Time.time + _cooldown;
 
-        Health closestTarget = null;
+        _isAbilityActive = false;
+        OnStateChanged?.Invoke(_isAbilityActive);
+
+        if (_coroutineLaunch != null)
+        {
+            StopCoroutine(_coroutineLaunch);
+        }
+
+        if (_coroutineCooldown != null)
+        {
+            StopCoroutine(_coroutineCooldown);
+        }
+
+
+        _coroutineCooldown = StartCoroutine(CooldownRoutine());
+    }
+
+    private IEnumerator CooldownRoutine()
+    {
+        while (Time.time < _nextAbilityTime)
+        {
+            ProgressChanged?.Invoke(CooldownProgress);
+            yield return null;
+        }
+    }
+
+    private void ProcessVampirism()
+    {
+        IDamageable closestTarget = FindClosestTarget();
+
+        StealHealth(closestTarget);
+    }
+
+    private void StealHealth(IDamageable target)
+    {
+        if (target != null)
+        {
+            float stealAmount = _damagePerSecond * Time.deltaTime;
+            target.TakeDamage(stealAmount);
+            _playerHealth.TakeHeal(stealAmount);
+        }
+    }
+
+    private IDamageable FindClosestTarget()
+    {
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, _radius, _hits, _layer);
+        IDamageable target = null;
         float minimumDistance = float.MaxValue;
 
-        foreach (Collider2D hit in hits)
+        for (int i = 0; i < count; i++)
         {
-            if (hit.TryGetComponent(out Health health))
+            Collider2D hit = _hits[i];
+
+            if (hit.TryGetComponent(out IDamageable health))
             {
                 Vector3 offset = hit.transform.position - transform.position;
 
@@ -77,16 +126,11 @@ public class AbilityCast : MonoBehaviour
                 if (squaredDistance < minimumDistance)
                 {
                     minimumDistance = squaredDistance;
-                    closestTarget = health;
+                    target = health;
                 }
             }
         }
 
-        if (closestTarget != null)
-        {
-            float stealAmount = _damagePerSecond * Time.deltaTime;
-            closestTarget.TakeDamage(stealAmount);
-            _playerHealth.TakeHeal(stealAmount);
-        }
+        return target;
     }
 }
