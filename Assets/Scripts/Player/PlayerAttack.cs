@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -16,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     private float _nextAttackTime;
     private bool _isAttack;
     private WaitForSeconds _wait;
+    private Coroutine _coroutineAttack;
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Time.time >= _nextAttackTime && !IsAttacking)
         {
-            StartCoroutine(AttackCoroutine());
+            _coroutineAttack = StartCoroutine(AttackCoroutine());
         }
     }
 
@@ -39,16 +39,26 @@ public class PlayerAttack : MonoBehaviour
 
         if (hit != null)
         {
-            if (hit.TryGetComponent(out Health health))
+            if (hit.TryGetComponent(out IDamageable health))
             {
                 health.TakeDamage(_damage);
             }
         }
 
-        _nextAttackTime = Time.time + _cooldown;
-
         yield return _wait;
 
+        StopAttack();
+    }
+
+    private void StopAttack()
+    {
+        _nextAttackTime = Time.time + _cooldown;
+
         _isAttack = false;
+
+        if (_coroutineAttack != null)
+        {
+            StopCoroutine(_coroutineAttack);
+        }
     }
 }

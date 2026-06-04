@@ -5,13 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class AbilityCast : MonoBehaviour
 {
+    private const int StandartArrayCount = 10;
+
     [SerializeField] private float _cooldown;
     [SerializeField] private float _radius;
     [SerializeField] private LayerMask _layer;
     [SerializeField] private float _damagePerSecond;
     [SerializeField] private float _duration;
-
-    private const int StandartArrayCount = 10;
 
     private bool _isAbilityActive = false;
     private float _elapsed;
@@ -22,7 +22,7 @@ public class AbilityCast : MonoBehaviour
     private Coroutine _coroutineCooldown;
 
     public event Action<float> ProgressChanged;
-    public event Action<bool> OnStateChanged;
+    public event Action<bool> StateAbilityChanged;
 
     public float CastProgress =>  1f - (_elapsed / _duration);
     public float CooldownProgress => Mathf.Clamp01(1f - ((_nextAbilityTime - Time.time) / _cooldown));
@@ -46,7 +46,7 @@ public class AbilityCast : MonoBehaviour
         _elapsed = 0;
 
         _isAbilityActive = true;
-        OnStateChanged?.Invoke(_isAbilityActive);
+        StateAbilityChanged?.Invoke(_isAbilityActive);
 
         while (_elapsed < _duration)
         {
@@ -65,7 +65,7 @@ public class AbilityCast : MonoBehaviour
         _nextAbilityTime = Time.time + _cooldown;
 
         _isAbilityActive = false;
-        OnStateChanged?.Invoke(_isAbilityActive);
+        StateAbilityChanged?.Invoke(_isAbilityActive);
 
         if (_coroutineLaunch != null)
         {

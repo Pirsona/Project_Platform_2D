@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
+    private const float Min = 0;
+
     [SerializeField] private float _max;
-
-    private float _min = 0;
-
+    
     public event Action Died;
     public event Action ValueChanged;
 
@@ -27,9 +27,9 @@ public class Health : MonoBehaviour, IDamageable
 
     public void TakeDamage(float count)
     {
-        Current = Mathf.Max(Current - count, _min);
+        Current = Mathf.Max(Current - count, Min);
 
-        if (Current <= _min)
+        if (Current <= Min)
         {
             Died?.Invoke();
         }
